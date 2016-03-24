@@ -23,7 +23,7 @@ that automatically gets started for that container on boot.
 
 # nginx-static
 
-A simple nginx container to serve static content via HTTP.
+A simple [nginx](https://www.nginx.com/) container to serve static content via HTTP.
 
 Setup:
 
@@ -35,7 +35,7 @@ Place your content in docker_volumes/nginx-static
 
 # gitolite
 
-gitolite hosts git repositories and makes it easy to allow access to
+[gitolite](http://gitolite.com/gitolite/) hosts git repositories and makes it easy to allow access to
 your coworkers or friends.
 
 Setup:
