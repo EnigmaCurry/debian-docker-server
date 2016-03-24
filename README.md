@@ -101,7 +101,8 @@ command before you setup your other containers.
 
 #### Create IAM and S3 bucket
 
-It's best to create a fresh bucket and access keys. Here's how you do that:
+For duplicity backups, it's best to create a fresh bucket and access
+keys that only have access to that one bucket. Here's how to do that:
 
 * Login to the the [AWS console](https://console.aws.amazon.com)
 * Navigate to the [S3 console](https://console.aws.amazon.com/s3) and
