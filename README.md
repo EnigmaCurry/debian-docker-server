@@ -1,8 +1,11 @@
 Debian Docker Server
 ====================
 
-This is a config framework for running a debian (jessie) docker
-server. Separate setup scripts for a collection of docker containers.
+This is a set of scripts to run and maintain a docker host running
+debian (jessie.) It includes a number of scripts to setup containers
+and create systemd service files for them. It includes a backup script
+for all of the container volumes to Amazon S3, as well as a restore
+process to completely recreate the environment on a fresh server.
 
 Bootstrap Server
 ----------------
@@ -12,7 +15,8 @@ Run the setup script from this repository on the server:
     bash <(wget https://git.io/vaNIX -q -O -)
 	
 This configures the firewall, installs docker, and clones this
-repository.
+repository. This is intended to be run on a fresh server (tested on
+Digital Ocean Debian 8.3 image)
 
 Docker containers
 -----------------
