@@ -22,8 +22,8 @@ Docker containers
 -----------------
 
 This repository ships with several docker container configurations you
-can use. Each one has a setup command that creates a systemd service
-that automatically gets started for that container on boot.
+can use. Each one has a setup script that creates a systemd service
+that you can enable to start containers on system boot.
 
 ### nginx-static
 
