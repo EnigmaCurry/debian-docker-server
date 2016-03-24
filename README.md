@@ -28,8 +28,7 @@ A simple [nginx](https://www.nginx.com/) container to serve static content via H
 Setup:
 
     ./debian-docker-server/docker/nginx-static/setup.sh
-	systemctl enable nginx-static
-	systemctl start nginx-static
+	systemctl enable nginx-static && systemctl start nginx-static
 
 Place your content in docker_volumes/nginx-static
 
@@ -41,8 +40,7 @@ your coworkers or friends.
 Setup:
 
     ./debian-docker-server/docker/gitolite/setup.sh
-	systemctl enable gitolite
-	systemctl start gitolite
+	systemctl enable gitolite && systemctl start gitolite
 
 The script will ask you for your SSH public key. This can also be
 specified via the SSH\_KEY environment variable. This should be the
@@ -77,8 +75,7 @@ You can backup all your containers to Amazon S3 with this one.
 Setup:
 
     ./debian-docker-server/docker/duplicity/setup.sh
-	systemctl enable duplicity
-	systemctl start duplicity
+	systemctl enable duplicity && systemctl start duplicity
 	
 Setup will ask you for your S3 bucket and authentication parameters
 (see the section below if you don't have that setup already.) In
