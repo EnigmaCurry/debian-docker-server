@@ -33,25 +33,4 @@ docker rm -f $DATA_CONTAINER_NAME > /dev/null 2>&1
 docker run -v $BACKUP_VOLUME:/backups --name $DATA_CONTAINER_NAME busybox true
 docker pull $DOCKER_CONTAINER
 
-######################################################################
-### Create systemd service
-######################################################################
-cat <<EOF > $THIS_DIR/$CONTAINER_NAME.service
-[Unit]
-Description=$CONTAINER_NAME
-Requires=docker.service
-After=docker.service
-
-[Service]
-Restart=always
-ExecStart=/usr/bin/docker run --rm --volumes-from $DATA_CONTAINER_NAME --name $CONTAINER_NAME $EXTRA_DOCKER_OPTS $DOCKER_CONTAINER
-ExecStop=/usr/bin/docker stop -t 5 $CONTAINER_NAME
-
-[Install]
-WantedBy=multi-user.target
-EOF
-
-systemctl link $THIS_DIR/"$CONTAINER_NAME".service
-touch /etc/init.d/$CONTAINER_NAME
-######################################################################
-
+create_service
