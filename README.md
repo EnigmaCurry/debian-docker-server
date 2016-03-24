@@ -53,4 +53,16 @@ Now checkout the admin repository from your local machine:
 
     git clone ssh://git@YOUR_SERVER:2222/gitolite-admin
 	
+Place your users in the the config file and their SSH keys in keydir.
 
+Here's a simple config example:
+
+    @developers     = admin ryan
+
+    repo gitolite-admin
+    RW+     =   admin
+
+    repo dotfiles-private
+    RW+     =   ryan
+
+For more info see the [gitolite docs](http://gitolite.com/gitolite/gitolite.html)
