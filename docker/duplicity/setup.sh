@@ -20,6 +20,7 @@ do
     [ -z "$AWS_ACCESS_KEY" ] && read -p "Please enter your AWS Access Key: " AWS_ACCESS_KEY
     [ -z "$AWS_SECRET_KEY" ] && read -p "Please enter your AWS Secret Key: " AWS_SECRET_KEY
     confirm_vars AWS_BUCKET AWS_ACCESS_KEY AWS_SECRET_KEY
+    [ $? == 0 ] && break
 done
 
 EXTRA_DOCKER_OPTS="-e AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY -e AWS_SECRET_ACCESS_KEY=$AWS_SECRET_KEY -e REMOTE_URL=s3+http://$AWS_BUCKET/"
