@@ -54,7 +54,7 @@ After=docker.service
 [Service]
 Restart=always
 ExecStart=/usr/bin/docker run --rm --volumes-from $DATA_CONTAINER_NAME --name $CONTAINER_NAME $EXTRA_DOCKER_OPTS $DOCKER_CONTAINER
-ExecStop=/usr/bin/docker stop -t 5 $DOCKER_CONTAINER
+ExecStop=/usr/bin/docker stop -t 5 $CONTAINER_NAME
 
 [Install]
 WantedBy=multi-user.target
