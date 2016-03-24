@@ -41,7 +41,7 @@ server in docker_volumes/nginx-static/conf
 ### gitolite
 
 [gitolite](http://gitolite.com/gitolite/) hosts git repositories and makes it easy to allow access to
-your coworkers or friends.
+your coworkers or friends. This container runs it's own SSH server on it's own port (2222 by default) 
 
 Setup:
 
