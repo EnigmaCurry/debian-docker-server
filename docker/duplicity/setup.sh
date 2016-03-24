@@ -23,7 +23,7 @@ do
     [ $? == 0 ] && break
 done
 
-EXTRA_DOCKER_OPTS="-e AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY -e AWS_SECRET_ACCESS_KEY=$AWS_SECRET_KEY -e REMOTE_URL=s3+http://$AWS_BUCKET/"
+EXTRA_DOCKER_OPTS="-e AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY -e AWS_SECRET_ACCESS_KEY=$AWS_SECRET_KEY -e REMOTE_URL=s3+http://$AWS_BUCKET/ -e SOURCE_PATH=/backups"
 if [ -v "AWS_ENCRYPTION_KEY" ]; then
     EXTRA_DOCKER_OPTS=$EXTRA_DOCKER_OPTS" -e PASSPHRASE=$AWS_ENCRYPTION_KEY"
 fi
@@ -32,7 +32,7 @@ THIS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 BACKUP_VOLUME=$THIS_DIR/../../docker_volumes
 
 docker rm -f $DATA_CONTAINER_NAME > /dev/null 2>&1
-docker run -v $BACKUP_VOLUME:/to_backup --name $DATA_CONTAINER_NAME busybox true
+docker run -v $BACKUP_VOLUME:/backups --name $DATA_CONTAINER_NAME busybox true
 docker pull $DOCKER_CONTAINER
 
 ######################################################################
