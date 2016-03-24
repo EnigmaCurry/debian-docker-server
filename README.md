@@ -64,5 +64,8 @@ Here's a simple config example:
 
     repo dotfiles-private
         RW+     =   ryan
+		
+	repo work-project
+	    RW+     =   @developers
 
 For more info see the [gitolite docs](http://gitolite.com/gitolite/gitolite.html)
