@@ -9,9 +9,9 @@ DATA_CONTAINER_NAME="gitolite-data"
 SSH_PORT="2222"
 EXTRA_DOCKER_OPTS="-p $SSH_PORT:22"
 ######################################################################
-source ../../lib/bash_helpers.sh
-
 THIS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+source $THIS_DIR/../../lib/bash_helpers.sh
+
 GIT_VOLUME=$THIS_DIR/../../docker_volumes/$CONTAINER_NAME/repositories
 SSH_VOLUME=$THIS_DIR/../../docker_volumes/$CONTAINER_NAME/ssh
 

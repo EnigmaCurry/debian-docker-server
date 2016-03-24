@@ -12,7 +12,8 @@ DATA_CONTAINER_NAME="duplicity-data"
 # AWS_SECRET_KEY
 # AWS_ENCRYPTION_KEY
 ######################################################################
-source ../../lib/bash_helpers.sh
+THIS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+source $THIS_DIR/../../lib/bash_helpers.sh
 
 while :
 do
@@ -26,7 +27,6 @@ done
 
 EXTRA_DOCKER_OPTS="-e AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY -e AWS_SECRET_ACCESS_KEY=$AWS_SECRET_KEY -e REMOTE_URL=s3+http://$AWS_BUCKET/ -e SOURCE_PATH=/backups -e PASSPHRASE=$AWS_ENCRYPTION_KEY"
 
-THIS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 BACKUP_VOLUME=$THIS_DIR/../../docker_volumes
 
 docker rm -f $DATA_CONTAINER_NAME > /dev/null 2>&1
