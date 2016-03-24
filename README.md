@@ -85,7 +85,7 @@ You can backup all your containers to Amazon S3 with this one.
 * Click Create
 * Make note of the Access and Secret keys. They are only displayed this one time.
 * Click on the new user and go to the Permissions tab. Create an
-  'custom inline policy' and paste the following, changint the bucket name to yours:
+  'custom inline policy' and paste the following, changing the bucket name to yours:
   
   
         {
