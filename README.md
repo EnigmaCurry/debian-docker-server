@@ -60,9 +60,9 @@ Here's a simple config example:
     @developers     = admin ryan
 
     repo gitolite-admin
-    RW+     =   admin
+        RW+     =   admin
 
     repo dotfiles-private
-    RW+     =   ryan
+        RW+     =   ryan
 
 For more info see the [gitolite docs](http://gitolite.com/gitolite/gitolite.html)
