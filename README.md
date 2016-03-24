@@ -21,7 +21,7 @@ This repository ships with several docker container configurations you
 can use. Each one has a setup command that creates a systemd service
 that automatically gets started for that container on boot.
 
-# nginx-static
+### nginx-static
 
 A simple [nginx](https://www.nginx.com/) container to serve static content via HTTP.
 
@@ -33,7 +33,7 @@ Setup:
 
 Place your content in docker_volumes/nginx-static
 
-# gitolite
+### gitolite
 
 [gitolite](http://gitolite.com/gitolite/) hosts git repositories and makes it easy to allow access to
 your coworkers or friends.
@@ -70,7 +70,7 @@ Here's a simple config example:
 
 For more info see the [gitolite docs](http://gitolite.com/gitolite/gitolite.html)
 
-# duplicity
+### duplicity
 
 You can backup all your containers to Amazon S3 with this one.
 
@@ -99,7 +99,7 @@ You can restore the data with:
 If you're restoring data to a new machine, make sure you run that
 command before you setup your other containers.
 
-## Create IAM and S3 bucket
+#### Create IAM and S3 bucket
 
 It's best to create a fresh bucket and access keys. Here's how you do that:
 
