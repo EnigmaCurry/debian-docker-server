@@ -119,7 +119,8 @@ keys that only have access to that one bucket. Here's how to do that:
 * Click Create
 * Make note of the Access and Secret keys. They are only displayed this one time.
 * Click on the new user and go to the Permissions tab. Create an
-  'custom inline policy' and paste the following, changing the bucket name to yours:
+  'custom inline policy' and paste the following, changing the
+  instances of 'dds-duplicity' to the name of the bucket you created:
   
         {
           "Statement": [
