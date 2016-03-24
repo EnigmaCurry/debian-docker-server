@@ -101,9 +101,9 @@ You can restore the data with:
 
     docker exec -it duplicity restore
 
-If you're restoring data to a new machine, make sure you run that
-command before you setup your other containers as some of the scripts
-will try to look for existing data before doing their setup.
+If you're restoring data to a new machine, make sure you run the
+restore command before you setup your other containers as some of the
+scripts will try to look for existing data before doing their setup.
 
 #### Create IAM and S3 bucket
 
