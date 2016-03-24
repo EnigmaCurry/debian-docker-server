@@ -15,3 +15,4 @@ apt update
 apt install -y docker-engine
 systemctl start docker
 
+git clone https://github.com/EnigmaCurry/debian-docker-server.git
