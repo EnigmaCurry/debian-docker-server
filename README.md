@@ -114,7 +114,6 @@ It's best to create a fresh bucket and access keys. Here's how you do that:
 * Click on the new user and go to the Permissions tab. Create an
   'custom inline policy' and paste the following, changing the bucket name to yours:
   
-  
         {
           "Statement": [
             {
@@ -127,8 +126,3 @@ It's best to create a fresh bucket and access keys. Here's how you do that:
             }
           ]
         }
-
-* Now you have a user account for full control of this bucket
-  only. We'll feed these credentials into the duplicity docker
-  container.
-
