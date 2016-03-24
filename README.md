@@ -27,7 +27,7 @@ A simple [nginx](https://www.nginx.com/) container to serve static content via H
 
 Setup:
 
-    ./debian-docker-server/docker/nginx-static/setup.sh
+    ~/debian-docker-server/docker/nginx-static/setup.sh
 	systemctl enable nginx-static
 	systemctl start nginx-static
 
@@ -40,7 +40,7 @@ your coworkers or friends.
 
 Setup:
 
-    ./debian-docker-server/docker/gitolite/setup.sh
+    ~/debian-docker-server/docker/gitolite/setup.sh
 	systemctl enable gitolite
 	systemctl start gitolite
 
@@ -76,7 +76,7 @@ You can backup all your containers to Amazon S3 with this one.
 
 Setup:
 
-    ./debian-docker-server/docker/duplicity/setup.sh
+    ~/debian-docker-server/docker/duplicity/setup.sh
 	systemctl enable duplicity
 	systemctl start duplicity
 	
@@ -87,7 +87,7 @@ with. Save all that information some place safe. You will need all
 that information if you need to restore to a new machine.
 
 With the duplicity container running, it will backup any changes to
-your docker volumes (./debian-docker-server/docker_volumes)
+your docker volumes (~/debian-docker-server/docker_volumes)
 hourly. You can force the backup to run now with the follwing command:
 
     docker exec -it duplicity backup
