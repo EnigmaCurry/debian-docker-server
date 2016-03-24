@@ -86,9 +86,9 @@ addition it will ask you for a passphrase to encrypt the backups
 with. Save all that information some place safe. You will need all
 that information if you need to restore to a new machine.
 
-With the duplicity container running, it will backup any changes found
-in the ./debian-docker-server/docker_volumes directory hourly. You can
-force the backup to run now with the follwing command:
+With the duplicity container running, it will backup any changes to
+your docker volumes (./debian-docker-server/docker_volumes)
+hourly. You can force the backup to run now with the follwing command:
 
     docker exec -it duplicity backup
 
