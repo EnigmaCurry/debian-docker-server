@@ -27,7 +27,7 @@ A simple [nginx](https://www.nginx.com/) container to serve static content via H
 
 Setup:
 
-    ./docker/nginx-static/setup.sh
+    ./debian-docker-server/docker/nginx-static/setup.sh
 	systemctl enable nginx-static
 	systemctl start nginx-static
 
@@ -40,7 +40,7 @@ your coworkers or friends.
 
 Setup:
 
-    ./docker/gitolite/setup.sh
+    ./debian-docker-server/docker/gitolite/setup.sh
 	systemctl enable gitolite
 	systemctl start gitolite
 
