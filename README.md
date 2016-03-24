@@ -35,7 +35,8 @@ Setup:
 	systemctl enable nginx-static
 	systemctl start nginx-static
 
-Place your content in docker_volumes/nginx-static
+Place your content in docker_volumes/nginx-static/html. Congigure the
+server in docker_volumes/nginx-static/conf
 
 ### gitolite
 
