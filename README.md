@@ -69,3 +69,38 @@ Here's a simple config example:
 	    RW+     =   @developers
 
 For more info see the [gitolite docs](http://gitolite.com/gitolite/gitolite.html)
+
+# duplicity
+
+You can backup all your containers to Amazon S3 with this one.
+
+## Create IAM and S3 bucket
+
+* Login to the the [AWS console](https://console.aws.amazon.com)
+* Navigate to the [S3 console](https://console.aws.amazon.com/s3) and
+  create a new bucket. For demo purposes I chose 'dds-duplicity'.
+* Navigate to the [IAM console](https://console.aws.amazon.com/iam)
+* Click on Users and Create New Users
+* Enter the name you want. I chose 'dds-duplicity'
+* Click Create
+* Make note of the Access and Secret keys. They are only displayed this one time.
+* Click on the new user and go to the Permissions tab. Create an
+  'custom inline policy' and paste the following, changint the bucket name to yours:
+  
+  
+        {
+          "Statement": [
+            {
+              "Action": "s3:*",
+              "Effect": "Allow",
+              "Resource": [
+                "arn:aws:s3:::dds-duplicity",
+                "arn:aws:s3:::dds-duplicity/*"
+              ]
+            }
+          ]
+        }
+
+* Now you have a user account for full control of this bucket
+  only. We'll feed these credentials into the duplicity docker
+  container.
