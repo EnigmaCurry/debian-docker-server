@@ -16,9 +16,9 @@ source ../../lib/bash_helpers.sh
 
 while :
 do
-    [ -z "$AWS_BUCKET" ] && read -p "Please enter your AWS Bucket Name" AWS_BUCKET
-    [ -z "$AWS_ACCESS_KEY" ] && read -p "Please enter your AWS Access Key" AWS_ACCESS_KEY
-    [ -z "$AWS_SECRET_KEY" ] && read -p "Please enter your AWS Secret Key" AWS_SECRET_KEY
+    [ -z "$AWS_BUCKET" ] && read -p "Please enter your AWS Bucket Name: " AWS_BUCKET
+    [ -z "$AWS_ACCESS_KEY" ] && read -p "Please enter your AWS Access Key: " AWS_ACCESS_KEY
+    [ -z "$AWS_SECRET_KEY" ] && read -p "Please enter your AWS Secret Key: " AWS_SECRET_KEY
     confirm_vars AWS_BUCKET AWS_ACCESS_KEY AWS_SECRET_KEY
 done
 
