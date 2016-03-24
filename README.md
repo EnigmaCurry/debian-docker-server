@@ -74,7 +74,34 @@ For more info see the [gitolite docs](http://gitolite.com/gitolite/gitolite.html
 
 You can backup all your containers to Amazon S3 with this one.
 
+Setup:
+
+    ./debian-docker-server/docker/duplicity/setup.sh
+	systemctl enable duplicity
+	systemctl start duplicity
+	
+Setup will ask you for your S3 bucket and authentication parameters
+(see the section below if you don't have that setup already.) In
+addition it will ask you for a passphrase to encrypt the backups
+with. Save all that information some place safe. You will need all
+that information if you need to restore to a new machine.
+
+With the duplicity container running, it will backup any changes found
+in the ./debian-docker-server/docker_volumes directory hourly. You can
+force the backup to run now with the follwing command:
+
+    docker exec -it duplicity backup
+
+You can restore the data with:
+
+    docker exec -it duplicity restore
+
+If you're restoring data to a new machine, make sure you run that
+command before you setup your other containers.
+
 ## Create IAM and S3 bucket
+
+It's best to create a fresh bucket and access keys. Here's how you do that:
 
 * Login to the the [AWS console](https://console.aws.amazon.com)
 * Navigate to the [S3 console](https://console.aws.amazon.com/s3) and
@@ -104,3 +131,4 @@ You can backup all your containers to Amazon S3 with this one.
 * Now you have a user account for full control of this bucket
   only. We'll feed these credentials into the duplicity docker
   container.
+
