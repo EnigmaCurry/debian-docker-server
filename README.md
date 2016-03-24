@@ -7,21 +7,12 @@ server. Seperate setup scripts for a collection of docker containers.
 Bootstrap Server
 ----------------
 
-Install git:
+Run the setup script from this repository on the server:
 
-    apt update && apt install -y git
-
-Checkout this repo:
-
-    git clone http://github.com/EnigmaCurry/debian-docker-server
-
-Run the setup script:
-
-    cd debian-docker-server
-	./debian_setup.sh
-
-You now have docker setup and an initial firewall that only allows ssh access
-
+    bash <(wget https://git.io/vaNIX -q -O -)
+	
+This configures the firewall, installs docker, and clones this
+repository.
 
 Docker containers
 -----------------
