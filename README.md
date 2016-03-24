@@ -2,7 +2,7 @@ Debian Docker Server
 ====================
 
 This is a config framework for running a debian (jessie) docker
-server. Seperate setup scripts for a collection of docker containers.
+server. Separate setup scripts for a collection of docker containers.
 
 Bootstrap Server
 ----------------
