@@ -63,3 +63,10 @@ EOF
     touch /etc/init.d/$CONTAINER_NAME
 ######################################################################
 }
+
+service_enable_now() {
+    # Old versions of systemd don't have enable --now so this will
+    # have to do:
+    systemctl enable $1
+    systemctl start $1
+}
