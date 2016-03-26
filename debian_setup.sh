@@ -1,3 +1,21 @@
+#!/bin/bash
+
+######################################################################
+### Installs base applications
+###
+###  - ufw firewall
+###   - port 22 allowed, not much else
+###  - Emacs editor
+###  - Docker
+###  - Clone of debian-docker-server into the current directory
+###
+######################################################################
+
+if [[ $EUID != 0 ]]; then
+    echo "This needs to be run as root"
+    exit 1
+fi
+
 apt update
 apt install -y apt-transport-https ca-certificates
 
