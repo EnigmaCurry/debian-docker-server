@@ -65,7 +65,7 @@ EOF
 }
 
 service_setup() {
-    $DDS_HOME/docker/$1/setup.sh
+    $DDS_ROOT/docker/$1/setup.sh
 }
 
 service_enable_now() {
