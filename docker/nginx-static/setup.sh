@@ -6,8 +6,8 @@
 DOCKER_CONTAINER="nginx"
 CONTAINER_NAME="nginx-static"
 DATA_CONTAINER_NAME="nginx-static-data"
-HTTP_PORT="80"
-EXTRA_DOCKER_OPTS="-p $HTTP_PORT:80"
+[ -z "$HTTP_PORT" ] && HTTP_PORT="80"
+[ -z "$EXTRA_DOCKER_OPTS" ] && EXTRA_DOCKER_OPTS="-p $HTTP_PORT:80"
 ######################################################################
 THIS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 source $THIS_DIR/../../lib/bash_helpers.sh

@@ -6,8 +6,8 @@
 DOCKER_CONTAINER="elsdoerfer/gitolite"
 CONTAINER_NAME="gitolite"
 DATA_CONTAINER_NAME="gitolite-data"
-SSH_PORT="2222"
-EXTRA_DOCKER_OPTS="-p $SSH_PORT:22"
+[ -z "$SSH_PORT" ] && SSH_PORT="2222"
+[ -z "$EXTRA_DOCKER_OPTS" ] && EXTRA_DOCKER_OPTS="-p $SSH_PORT:22"
 ######################################################################
 THIS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 source $THIS_DIR/../../lib/bash_helpers.sh
