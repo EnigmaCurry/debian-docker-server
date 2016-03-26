@@ -64,7 +64,7 @@ EOF
 ######################################################################
 }
 
-setup_service() {
+service_setup() {
     $DDS_HOME/docker/$1/setup.sh
 }
 
