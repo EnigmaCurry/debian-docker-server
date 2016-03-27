@@ -227,7 +227,7 @@ it requires a bit of setup, you can show off to your fellow cloud
 wizards some new found abilities... This third machine has a few
 requirements:
 
- * It has at least one unused TCP port open to the public internet.
+ * It needs to have at least one unused TCP port open to the public internet.
  * You have SSH access to it.
  * The sshd_config of the machine has
    ['GatewayPorts'](http://www.snailbook.com/faq/gatewayports.auto.html)
