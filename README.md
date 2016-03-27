@@ -242,7 +242,7 @@ certificate on your local computer, you could run curlbomb like this:
 
 That will output a different curl command:
 
-    bash <(curl -LSs http://public.example.com:8080 -H "X-knock: f77fcef19b8a44faba05fab91e1874bb")
+    bash <(curl -LSs https://public.example.com:8080 -H "X-knock: f77fcef19b8a44faba05fab91e1874bb")
 
 Run that command and watch the installation fly.
 
