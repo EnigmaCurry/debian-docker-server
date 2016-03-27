@@ -240,7 +240,8 @@ certificate on your local computer, you could run curlbomb like this:
 
     curlbomb /path/to/installer.sh --ssh edward@public.example.com:8080 --ssl /path/to/ssl_cert.pem
 
-That will output a different curl command:
+That will output a different curl command (note the public domain name rather 
+than the local IP, and https rather than http) :
 
     bash <(curl -LSs https://public.example.com:8080 -H "X-knock: f77fcef19b8a44faba05fab91e1874bb")
 
