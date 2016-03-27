@@ -157,7 +157,7 @@ individual containers need:
 
     cd $HOME
 
-    # Setup base system:
+    # Setup base system, set DDS_ROOT:
     source <(wget https://raw.githubusercontent.com/EnigmaCurry/debian-docker-server/master/debian_setup.sh -q -O -)
     source $DDS_ROOT/lib/bash_helpers.sh
     
