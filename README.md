@@ -7,6 +7,9 @@ and create systemd service files for them. It includes a backup script
 for all of the container volumes to Amazon S3, as well as a restore
 process to completely recreate the environment on a fresh server.
 
+Additionally, this README also details how to automate provisioning from your 
+personal computer with [curlbomb](https://github.com/EnigmaCurry/curlbomb).
+
 Bootstrap Server
 ----------------
 
