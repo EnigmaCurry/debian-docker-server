@@ -245,26 +245,29 @@ than the local IP, and https rather than http) :
 
     bash <(curl -LSs https://public.example.com:8080 -H "X-knock: f77fcef19b8a44faba05fab91e1874bb")
 
-Run that command and watch the installation fly.
+Paste that command, from anywhere in the world, and watch the installation fly.
 
 Let's enumerate what's cool about this:
 
  * You write the script and keep it on your local laptop. Sensitive
    data doesn't get saved anywhere else unless you want it to.
  * Your laptop stays completely behind a firewall.
+ * The client can be halfway around the world, as long as it can 
+   access the intermediary server.
  * curlbomb enforces a X-knock header, only clients that know the
-   correct knock gain access.
+   correct knock gain access (they know it because you pasted it 
+   in the curlbomb.)
  * curlbomb automatically quits after serving the script one time, 
    so the knock only works once. 
  * Everything is SSL encrypted, only the end client ever sees the script.
- * Even though I have to keep the ssl cert on my local computer, it can 
+ * Even though you have to keep the ssl cert on your local computer, it can 
    be PGP encrypted and curlbomb will decrypt it on the fly.
  * You didn't have to type anything on the client other than the curl
    command. This means your install is repeatable and documented.
  * You went through the trouble of setting up the intermediary server,
    but now you can use it again for other curlbombs :)
 
-I keep an alias for this public-accessible curlbomb like so:
+I keep an alias for this public-accessible curlbomb, for easier typing later:
 
     alias curlbomb_public="curlbomb --ssh edward@public.example.com:8080 --ssl ~/.curlbomb/cert.pem.gpg"
 
