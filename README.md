@@ -134,3 +134,133 @@ keys that only have access to that one bucket. Here's how to do that:
             }
           ]
         }
+
+Automated setup
+---------------
+
+You can automate the entire bootstrap and setup of a server by writing
+a script that contains all the necessary variables. The quick and
+dirty way of doing this is to just copy the script to the server and
+run it. This can get tedious pretty fast, especially if you have to
+provision a lot of servers.
+
+[curlbomb](https://github.com/EnigmaCurry/curlbomb) will let you keep
+the install script on your local computer where it's easy to edit and
+keep safe. It will also serve that script to the server to be used one
+time via curl.
+
+Write the installation script and specify all the variables the
+individual containers need:
+
+    cd $HOME
+
+    # Setup base system:
+    source <(wget https://raw.githubusercontent.com/EnigmaCurry/debian-docker-server/master/debian_setup.sh -q -O -)
+    source $DDS_ROOT/lib/bash_helpers.sh
+    
+    # Perform setup for each container:
+    # Running in a subshell (parentheses) prevents leaking environment
+    # variables between containers
+    
+    # Setup duplicity
+    (
+		# Your Amazon S3 bucket name and credentials to store backups of your containers:
+        export AWS_BUCKET=my-bucket-name
+        export AWS_ACCESS_KEY=XXXXXXXXXXXXXXXXXXXX
+        export AWS_SECRET_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        export AWS_ENCRYPTION_KEY=my_encryption_passphrase
+        service_setup duplicity
+        service_enable_now duplicity
+        docker exec -it duplicity restore
+    )
+    
+    # Setup nginx-static
+    (
+        export HTTP_PORT=80
+        service_setup nginx-static
+        service_enable_now nginx-static
+    )
+    
+    # Setup gitolite
+    (
+        export SSH_PORT=2222
+		# Your SSH key to be installed as the admin key for gitolite:
+        export SSH_KEY="ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEAmo9sQ6iAHDH8Gg1vd1js3R+wnbex3t68/oNgLhF//A9ierMXsNc+P09PO3VAYBxSvI5kxO/BLVecUVDLrnu525NlB6jpHK685ijs5MZB2Bv5CTB5nDyhT3aQ7eO09eqHFOicFM3VOCdCesN4xDiTZ3g7ETzEax+NDhE0LN1iLxlpFPWcol/KA7KanA22kJTFqDRC/90u8lxedaAPALk7j8i5beRAg7b1LdJLa1gyKnLXOeKR01aMBObtA9gF2vbIPeoyKwQxJyjujLuuC9Jmp/C1hBI08H2+Gltu/AZafcLlqLjNjxPJhgcLhbw4ZB4YCWeVKiRMQF90vaK5ei12qQ== snowden@nsa"
+        service_setup gitolite
+        service_enable_now gitolite
+    )
+
+Since this is potentially sensitive data, you may want to be careful
+where you store this script. This is where curlbomb comes in
+handy. You can write the script on your personal computer and serve it
+from there as a one-time-use installer script.
+
+Install curlbomb:
+
+    # On arch linux, with your favorite AUR helper:
+	pacaur -S curlbomb
+	
+	# Or with a PyPI installer:
+	pip install curlbomb
+	
+If you're on the same network as the machine you're installing to,
+just serve the file directly:
+
+    curlbomb /path/to/installer.sh
+
+curlbomb outputs a curl command like this:
+
+    bash <(curl -LSs http://10.13.37.133:43515 -H "X-knock: f77fcef19b8a44faba05fab91e1874bb")
+
+Paste that one line into the new machine and watch everything install by itself :)
+
+If the new machine is somewhere in the cloud (and you probably don't
+make a habit of opening up ports to your local computer), you can
+still use curlbomb from your local machine, but you'll need a third
+machine that has open ports to the internet to use as a proxy. Bear
+with me here, because cool magical stuff is about to happen, and while
+it requires a bit of setup, you can show off to your fellow cloud
+wizards some new found abilities... This third machine has a few
+requirements:
+
+ * It has at least one unused TCP port open to the public internet.
+ * You have SSH access to it.
+ * The sshd_config of the machine has
+   ['GatewayPorts'](http://www.snailbook.com/faq/gatewayports.auto.html)
+   set to "clientspecified" or "yes" (the former is more secure.)
+ * Optionally, you also have an SSL certificate created for that machine.
+
+For example, if your intermediary server is called public.example.com,
+it has port 8080 open to the public, you have ssh access for the user
+called 'edward', it has GatewayPorts turned on, and you have a copy of it's SSL
+certificate on your local computer, you could run curlbomb like this:
+
+    curlbomb /path/to/installer.sh --ssh edward@public.example.com:8080 --ssl /path/to/ssl_cert.pem
+
+That will output a different curl command:
+
+    bash <(curl -LSs http://public.example.com:8080 -H "X-knock: f77fcef19b8a44faba05fab91e1874bb")
+
+Run that command and watch the installation fly.
+
+Let's enumerate what's cool about this:
+
+ * You write the script and keep it on your local laptop. Sensitive
+   data doesn't get saved anywhere else unless you want it to.
+ * Your laptop stays completely behind a firewall.
+ * curlbomb enforces a X-knock header, only clients that know the
+   correct knock gain access.
+ * curlbomb automatically quits after serving the script one time, 
+   so the knock only works once. 
+ * Everything is SSL encrypted, only the end client ever sees the script.
+ * Even though I have to keep the ssl cert on my local computer, it can 
+   be PGP encrypted and curlbomb will decrypt it on the fly.
+ * You didn't have to type anything on the client other than the curl
+   command. This means your install is repeatable and documented.
+ * You went through the trouble of setting up the intermediary server,
+   but now you can use it again for other curlbombs :)
+
+I keep an alias for this public-accessible curlbomb like so:
+
+    alias curlbomb_public="curlbomb --ssh edward@public.example.com:8080 --ssl ~/.curlbomb/cert.pem.gpg"
+
