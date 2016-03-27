@@ -174,6 +174,7 @@ individual containers need:
         export AWS_ENCRYPTION_KEY=my_encryption_passphrase
         service_setup duplicity
         service_enable_now duplicity
+		# Run restore to download any existing backups to this machine:
         docker exec -it duplicity restore
     )
     
