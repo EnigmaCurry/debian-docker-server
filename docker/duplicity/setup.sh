@@ -17,11 +17,13 @@ source $THIS_DIR/../../lib/bash_helpers.sh
 
 while :
 do
-    [ -z "$AWS_BUCKET" ] && read -p "Please enter your AWS Bucket Name: " AWS_BUCKET
-    [ -z "$AWS_ACCESS_KEY" ] && read -p "Please enter your AWS Access Key: " AWS_ACCESS_KEY
-    [ -z "$AWS_SECRET_KEY" ] && read -p "Please enter your AWS Secret Key: " AWS_SECRET_KEY
-    [ -z "$AWS_ENCRYPTION_KEY" ] && read -p "Please enter a passphrase to encrypt data: " AWS_ENCRYPTION_KEY
-    confirm_vars AWS_BUCKET AWS_ACCESS_KEY AWS_SECRET_KEY AWS_ENCRYPTION_KEY
+    [ -z "$AWS_BUCKET" ] && INTERACTIVE=true && read -p "Please enter your AWS Bucket Name: " AWS_BUCKET
+    [ -z "$AWS_ACCESS_KEY" ] && INTERACTIVE=true && read -p "Please enter your AWS Access Key: " AWS_ACCESS_KEY
+    [ -z "$AWS_SECRET_KEY" ] && INTERACTIVE=true && read -p "Please enter your AWS Secret Key: " AWS_SECRET_KEY
+    [ -z "$AWS_ENCRYPTION_KEY" ] && INTERACTIVE=true && read -p "Please enter a passphrase to encrypt data: " AWS_ENCRYPTION_KEY
+    if [ "$INTERACTIVE" == "true" ]; then
+	confirm_vars AWS_BUCKET AWS_ACCESS_KEY AWS_SECRET_KEY AWS_ENCRYPTION_KEY
+    fi
     [ $? == 0 ] && break
 done
 
