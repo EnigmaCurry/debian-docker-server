@@ -71,13 +71,32 @@ service_setup() {
     $DDS_ROOT/docker/$1/setup.sh
 }
 
+wait_for_container() {
+    (
+	set +e
+	tries=0
+	while [ $tries -lt 15 ]; do
+	    tries=$((tries+1))
+	    echo "Waiting for $1 container to start ..."
+	    if (docker inspect $1 > /dev/null); then
+		break
+	    else
+		sleep 2
+	    fi
+	done
+    )
+}
+
 service_enable_now() {
     # Old versions of systemd don't have enable --now so this will have to do:
     (
-	# use +e when enabling because there's some hamless complaint about missing service files
 	set +e
 	systemctl enable $1
+	# Return true even though systemctl is dumb on debian and
+	# tries to call a non-existent LSB script
+	true
     )
-    systemctl start $1
+    exe systemctl start $1
+    exe wait_for_container $1
 }
  
