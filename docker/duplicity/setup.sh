@@ -3,7 +3,8 @@
 ######################################################################
 ### Container variables:
 ######################################################################
-DOCKER_CONTAINER="dataferret/cron-duplicity"
+[ -z "$VERSION" ] && VERSION=":latest"
+DOCKER_CONTAINER="dataferret/cron-duplicity$VERSION"
 CONTAINER_NAME="duplicity"
 DATA_CONTAINER_NAME="duplicity-data"
 # AWS credentials specified interactively by default:

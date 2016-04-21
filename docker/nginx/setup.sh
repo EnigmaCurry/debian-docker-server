@@ -3,7 +3,8 @@
 ######################################################################
 ### Container variables:
 ######################################################################
-DOCKER_CONTAINER="nginx"
+[ -z "$VERSION" ] && VERSION=":latest"
+DOCKER_CONTAINER="nginx$VERSION"
 CONTAINER_NAME="nginx"
 DATA_CONTAINER_NAME="nginx-data"
 [ -z "$HTTP_PORT" ] && HTTP_PORT="80"

@@ -3,7 +3,8 @@
 ######################################################################
 ### Container variables:
 ######################################################################
-DOCKER_CONTAINER="kanboard/kanboard:stable"
+[ -z "$VERSION" ] && VERSION=":stable"
+DOCKER_CONTAINER="kanboard/kanboard$VERSION"
 CONTAINER_NAME="kanboard"
 DATA_CONTAINER_NAME="kanboard-data"
 [ -z "$KANBOARD_PORT" ] && KANBOARD_PORT="127.0.0.1:8000"

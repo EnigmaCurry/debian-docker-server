@@ -3,7 +3,8 @@
 ######################################################################
 ### Container variables:
 ######################################################################
-DOCKER_CONTAINER="elsdoerfer/gitolite"
+[ -z "$VERSION" ] && VERSION=":latest"
+DOCKER_CONTAINER="elsdoerfer/gitolite$VERSION"
 CONTAINER_NAME="gitolite"
 DATA_CONTAINER_NAME="gitolite-data"
 [ -z "$SSH_PORT" ] && SSH_PORT="2222"
