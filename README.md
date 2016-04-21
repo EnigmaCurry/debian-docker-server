@@ -28,18 +28,18 @@ This repository ships with several docker container configurations you
 can use. Each one has a setup script that creates a systemd service
 that you can enable to start containers on system boot.
 
-### nginx-static
+### nginx
 
-A simple [nginx](https://www.nginx.com/) container to serve static content via HTTP.
+A simple [nginx](https://www.nginx.com/) container to use as a webserver.
 
 Setup:
 
-    ~/debian-docker-server/docker/nginx-static/setup.sh
-	systemctl enable nginx-static
-	systemctl start nginx-static
+    ~/debian-docker-server/docker/nginx/setup.sh
+	systemctl enable nginx
+	systemctl start nginx
 
-Place your content in docker_volumes/nginx-static/html. Congigure the
-server in docker_volumes/nginx-static/conf
+Place your content in docker_volumes/nginx/html. Congigure the
+server in docker_volumes/nginx/conf
 
 ### gitolite
 
@@ -178,11 +178,11 @@ individual containers need:
         docker exec -it duplicity restore
     )
     
-    # Setup nginx-static
+    # Setup nginx
     (
         export HTTP_PORT=80
-        service_setup nginx-static
-        service_enable_now nginx-static
+        service_setup nginx
+        service_enable_now nginx
     )
     
     # Setup gitolite
