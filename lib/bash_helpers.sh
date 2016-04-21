@@ -72,7 +72,7 @@ service_setup() {
 	echo "DDS_ROOT unset"
 	return 1
     fi
-    $DDS_ROOT/docker/$1/setup.sh
+    bash $DDS_ROOT/docker/$1/setup.sh
 }
 
 wait_for_container() {
