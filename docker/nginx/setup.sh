@@ -4,8 +4,8 @@
 ### Container variables:
 ######################################################################
 DOCKER_CONTAINER="nginx"
-CONTAINER_NAME="nginx-static"
-DATA_CONTAINER_NAME="nginx-static-data"
+CONTAINER_NAME="nginx"
+DATA_CONTAINER_NAME="nginx-data"
 [ -z "$HTTP_PORT" ] && HTTP_PORT="80"
 [ -z "$EXTRA_DOCKER_OPTS" ] && EXTRA_DOCKER_OPTS="-p $HTTP_PORT:80"
 ######################################################################
@@ -44,23 +44,6 @@ server {
         root   /usr/share/nginx/html;
     }
 }
-
-# # Kanboard
-# server {
-#     listen 80;
-#     server_name kanboard.your_domain_here.com;
-#
-#     location / {
-#       proxy_pass         http://kanboard;
-#       proxy_redirect     off;
-#       proxy_set_header   Host \$host;
-#       proxy_set_header   X-Real-IP \$remote_addr;
-#       proxy_set_header   X-Forwarded-For \$proxy_add_x_forwarded_for;
-#       proxy_set_header   X-Forwarded-Host \$server_name;
-#      }
-# }
-
-
 EOF
 fi
     
