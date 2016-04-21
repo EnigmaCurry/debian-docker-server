@@ -34,5 +34,9 @@ apt update
 apt install -y docker-engine
 systemctl start docker
 
-git clone https://github.com/EnigmaCurry/debian-docker-server.git
 export DDS_ROOT=$PWD/debian-docker-server
+if [ ! -d $DDS_ROOT ]; then
+    git clone https://github.com/EnigmaCurry/debian-docker-server.git
+else
+    echo "DDS_ROOT already exists at $DDS_ROOT, skipping git clone"
+fi
