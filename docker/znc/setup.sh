@@ -20,7 +20,7 @@ then
 fi
     
 docker rm -f $DATA_CONTAINER_NAME > /dev/null 2>&1
-docker run -v $DATA_VOLUME:/znc_data --name $DATA_CONTAINER_NAME busybox true
+docker run -v $DATA_VOLUME:/znc-data --name $DATA_CONTAINER_NAME busybox true
 docker pull $DOCKER_CONTAINER
 
 create_service
