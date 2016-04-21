@@ -155,11 +155,16 @@ time via curl.
 Write the installation script and specify all the variables the
 individual containers need:
 
+    set -e
     cd $HOME
-
-    # Setup base system, set DDS_ROOT:
-    source <(wget https://raw.githubusercontent.com/EnigmaCurry/debian-docker-server/master/debian_setup.sh -q -O -)
+    exe() { echo "\$ $@" ; "$@" ; }
+    
+    # Setup base system:
+    source <(curl https://raw.githubusercontent.com/EnigmaCurry/debian-docker-server/master/debian_setup.sh)
     source $DDS_ROOT/lib/bash_helpers.sh
+    
+    export domain="yourhost.example.com"
+    export http_port=80
     
     # Perform setup for each container:
     # Running in a subshell (parentheses) prevents leaking environment
@@ -167,32 +172,84 @@ individual containers need:
     
     # Setup duplicity
     (
-		# Your Amazon S3 bucket name and credentials to store backups of your containers:
+        # Version 1fd1ba is :latest as of 2016-04-21
+        export VERSION="@sha256:1fd1ba33739758bc87275224c0a19cba5c8f9bda473ddfd4ccd221a86cf63825"
         export AWS_BUCKET=my-bucket-name
         export AWS_ACCESS_KEY=XXXXXXXXXXXXXXXXXXXX
         export AWS_SECRET_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
         export AWS_ENCRYPTION_KEY=my_encryption_passphrase
-        service_setup duplicity
-        service_enable_now duplicity
-		# Run restore to download any existing backups to this machine:
-        docker exec -it duplicity restore
-    )
-    
-    # Setup nginx
-    (
-        export HTTP_PORT=80
-        service_setup nginx
-        service_enable_now nginx
+        exe service_setup duplicity
+        exe service_enable_now duplicity
+        exe docker exec -it duplicity restore
     )
     
     # Setup gitolite
     (
+        # Version 6f2dbd is :latest as of 2016-04-21
+        export VERSION="@sha256:6f2dbdb16791d306b88f9bc00a4905676b81da6fe19395aff54b163c366fd81d"
         export SSH_PORT=2222
 		# Your SSH key to be installed as the admin key for gitolite:
         export SSH_KEY="ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEAmo9sQ6iAHDH8Gg1vd1js3R+wnbex3t68/oNgLhF//A9ierMXsNc+P09PO3VAYBxSvI5kxO/BLVecUVDLrnu525NlB6jpHK685ijs5MZB2Bv5CTB5nDyhT3aQ7eO09eqHFOicFM3VOCdCesN4xDiTZ3g7ETzEax+NDhE0LN1iLxlpFPWcol/KA7KanA22kJTFqDRC/90u8lxedaAPALk7j8i5beRAg7b1LdJLa1gyKnLXOeKR01aMBObtA9gF2vbIPeoyKwQxJyjujLuuC9Jmp/C1hBI08H2+Gltu/AZafcLlqLjNjxPJhgcLhbw4ZB4YCWeVKiRMQF90vaK5ei12qQ== snowden@nsa"
-        service_setup gitolite
-        service_enable_now gitolite
+        exe service_setup gitolite
+        exe service_enable_now gitolite
     )
+    
+    # Setup kanboard
+    (
+        # Version c33bff is :stable as of 2016-04-21
+        export VERSION="@sha256:c33bffc474e7825a4d6f546d901c5d806db910f79d9da6bf1216526450c237b2"
+        exe service_setup kanboard
+        exe service_enable_now kanboard
+        # Create nginx proxy:
+        exe mkdir -p $DDS_ROOT/docker_volumes/nginx/conf
+        cat <<EOF > $DDS_ROOT/docker_volumes/nginx/conf/kanboard.conf
+    # Kanboard
+    server {
+        listen $http_port;
+        server_name kanboard.$domain;
+    
+        access_log  /var/log/nginx/log/kanboard.$domain.access.log  main;
+        error_log   /var/log/nginx/log/kanboard.$domain.error.log   error;
+    
+        location / {
+          proxy_pass         http://kanboard;
+          proxy_redirect     off;
+          proxy_set_header   Host \$host;
+          proxy_set_header   X-Real-IP \$remote_addr;
+          proxy_set_header   X-Forwarded-For \$proxy_add_x_forwarded_for;
+          proxy_set_header   X-Forwarded-Host \$server_name;
+         }
+    }
+    EOF
+    
+    )
+    
+    # Setup nginx
+    (
+        export VERSION=":latest"
+        export EXTRA_DOCKER_OPTS="-p $http_port:80 --link kanboard:kanboard"
+        exe service_setup nginx
+        cat <<EOF > $DDS_ROOT/docker_volumes/nginx/conf/default.conf
+    server {
+        listen       80;
+        server_name  $domain;
+    
+        access_log  /var/log/nginx/log/$domain.access.log  main;
+        error_log   /var/log/nginx/log/$domain.error.log   error;
+    
+        location / {
+            root   /usr/share/nginx/html;
+            index  index.html index.htm;
+        }
+    
+        error_page  404              /404.html;
+        error_page   500 502 503 504  /50x.html;
+    }
+    EOF
+        exe service_enable_now nginx
+    )
+        
+    echo "All steps completed"
 
 Since this is potentially sensitive data, you may want to be careful
 where you store this script. This is where curlbomb comes in
