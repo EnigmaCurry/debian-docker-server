@@ -68,6 +68,10 @@ EOF
 }
 
 service_setup() {
+    if [ -z "$DDS_ROOT" ]; then
+	echo "DDS_ROOT unset"
+	return 1
+    fi
     $DDS_ROOT/docker/$1/setup.sh
 }
 
