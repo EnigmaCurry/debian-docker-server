@@ -14,9 +14,11 @@ PLUGIN_VOLUME=$THIS_DIR/../../docker_volumes/$CONTAINER_NAME/plugins
 
 if [ ! -d "$DATA_VOLUME" ]; then
     mkdir -p $DATA_VOLUME
+    chown 100:101 $DATA_VOLUME
 fi
 if [ ! -d "$PLUGIN_VOLUME" ]; then
     mkdir -p $PLUGIN_VOLUME
+    chown 100:101 $PLUGIN_VOLUME
 fi
     
 docker rm -f $DATA_CONTAINER_NAME > /dev/null 2>&1
