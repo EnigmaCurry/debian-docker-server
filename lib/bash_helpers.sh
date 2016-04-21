@@ -75,12 +75,16 @@ wait_for_container() {
     (
 	set +e
 	tries=0
-	while [ $tries -lt 15 ]; do
+	while true; do
 	    tries=$((tries+1))
 	    echo "Waiting for $1 container to start ..."
 	    if (docker inspect $1 > /dev/null); then
 		break
 	    else
+		if [ $tries -gt 15 ]; then
+		    echo "Timed out waiting for $1 to start."
+		    return 1
+		fi
 		sleep 2
 	    fi
 	done
