@@ -15,8 +15,8 @@ personal computer with [curlbomb](https://github.com/EnigmaCurry/curlbomb).
   - [nginx](#nginx)
   - [gitolite](#gitolite)
   - [duplicity](#duplicity)
-  - [kanboard](#kanboard)
     - [Create IAM and S3 bucket](#create-iam-and-s3-bucket)
+  - [kanboard](#kanboard)
 - [Automated setup](#automated-setup)
 
 Bootstrap Server
@@ -117,6 +117,37 @@ If you're restoring data to a new machine, make sure you run the
 restore command before you setup your other containers as some of the
 scripts will try to look for existing data before doing their setup.
 
+#### Create IAM and S3 bucket
+
+For duplicity backups, it's best to create a fresh bucket and access
+keys that only have access to that one bucket. Here's how to do that:
+
+* Login to the the [AWS console](https://console.aws.amazon.com)
+* Navigate to the [S3 console](https://console.aws.amazon.com/s3) and
+  create a new bucket. For demo purposes I chose 'dds-duplicity'.
+* Navigate to the [IAM console](https://console.aws.amazon.com/iam)
+* Click on Users and Create New Users
+* Enter the name you want. I chose 'dds-duplicity'
+* Click Create
+* Make note of the Access and Secret keys. They are only displayed this one time.
+* Click on the new user and go to the Permissions tab. Create an
+  'custom inline policy' and paste the following, changing the
+  instances of 'dds-duplicity' to the name of the bucket you created:
+  
+        {
+          "Statement": [
+            {
+              "Action": "s3:*",
+              "Effect": "Allow",
+              "Resource": [
+                "arn:aws:s3:::dds-duplicity",
+                "arn:aws:s3:::dds-duplicity/*"
+              ]
+            }
+          ]
+        }
+
+
 ### kanboard
 
 [Kanboard](http://kanboard.net/) is a self-hosted kanban task board.
@@ -152,36 +183,6 @@ Create a nginx config file at `~/debian-docker-server/docker_volumes/nginx/conf/
 
 This setup is designed to be run from a subdomain, so make sure you
 use something like `kanboard.yourdomain.com`.
-
-#### Create IAM and S3 bucket
-
-For duplicity backups, it's best to create a fresh bucket and access
-keys that only have access to that one bucket. Here's how to do that:
-
-* Login to the the [AWS console](https://console.aws.amazon.com)
-* Navigate to the [S3 console](https://console.aws.amazon.com/s3) and
-  create a new bucket. For demo purposes I chose 'dds-duplicity'.
-* Navigate to the [IAM console](https://console.aws.amazon.com/iam)
-* Click on Users and Create New Users
-* Enter the name you want. I chose 'dds-duplicity'
-* Click Create
-* Make note of the Access and Secret keys. They are only displayed this one time.
-* Click on the new user and go to the Permissions tab. Create an
-  'custom inline policy' and paste the following, changing the
-  instances of 'dds-duplicity' to the name of the bucket you created:
-  
-        {
-          "Statement": [
-            {
-              "Action": "s3:*",
-              "Effect": "Allow",
-              "Resource": [
-                "arn:aws:s3:::dds-duplicity",
-                "arn:aws:s3:::dds-duplicity/*"
-              ]
-            }
-          ]
-        }
 
 Automated setup
 ---------------
