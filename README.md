@@ -214,7 +214,7 @@ just serve the file directly:
 
 curlbomb outputs a curl command like this:
 
-    bash <(curl -LSs http://10.13.37.133:43515 -H "X-knock: f77fcef19b8a44faba05fab91e1874bb")
+    KNOCK=zyA8OgIWAF4oSvsG bash <(curl -LSs http://10.13.37.133:43515)
 
 Paste that one line into the new machine and watch everything install by itself :)
 
@@ -239,12 +239,12 @@ it has port 8080 open to the public, you have ssh access for the user
 called 'edward', it has GatewayPorts turned on, and you have a copy of it's SSL
 certificate on your local computer, you could run curlbomb like this:
 
-    curlbomb /path/to/installer.sh --ssh edward@public.example.com:8080 --ssl /path/to/ssl_cert.pem
+    curlbomb --ssh edward@public.example.com:8080 --ssl /path/to/ssl_cert.pem run /path/to/installer.sh
 
 That will output a different curl command (note the public domain name rather 
 than the local IP, and https rather than http) :
 
-    bash <(curl -LSs https://public.example.com:8080 -H "X-knock: f77fcef19b8a44faba05fab91e1874bb")
+    KNOCK=4virgAOgkuS1XgEG bash <(curl -LSs https://public.example.com:8080)
 
 Paste that command, from anywhere in the world, and watch the installation fly.
 
