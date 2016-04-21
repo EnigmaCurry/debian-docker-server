@@ -39,5 +39,3 @@ fi
 
 create_service
 
-# Allow SSH access through the firewall
-ufw allow $SSH_PORT

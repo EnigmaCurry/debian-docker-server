@@ -76,5 +76,3 @@ docker pull $DOCKER_CONTAINER
 
 create_service
 
-# Allow SSH access through the firewall
-ufw allow $HTTP_PORT
