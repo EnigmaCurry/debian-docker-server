@@ -10,33 +10,34 @@
 ###  - Clone of debian-docker-server into the current directory
 ###
 ######################################################################
+exe() { echo "\$ $@" ; "$@" ; }
 
 if [[ $EUID != 0 ]]; then
     echo "This needs to be run as root"
     exit 1
 fi
 
-apt update
-apt install -y apt-transport-https ca-certificates
+exe apt update
+exe apt install -y apt-transport-https ca-certificates
 
-apt install -y git emacs-nox
+exe apt install -y git emacs-nox
 
 # Initial firewall rules:
-apt install ufw
+exe apt install ufw
 yes | ufw enable
-ufw default deny
-ufw allow 22
+exe ufw default deny
+exe ufw allow 22
 
 # Install Docker
-apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
+exe apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
 echo "deb https://apt.dockerproject.org/repo debian-jessie main" > /etc/apt/sources.list.d/docker.list
-apt update
-apt install -y docker-engine
-systemctl start docker
+exe apt update
+exe apt install -y docker-engine
+exe systemctl start docker
 
 export DDS_ROOT=$PWD/debian-docker-server
 if [ ! -d $DDS_ROOT ]; then
-    git clone https://github.com/EnigmaCurry/debian-docker-server.git
+    exe git clone https://github.com/EnigmaCurry/debian-docker-server.git
 else
-    echo "DDS_ROOT already exists at $DDS_ROOT, skipping git clone"
+    exe git -C $DDS_ROOT pull
 fi
