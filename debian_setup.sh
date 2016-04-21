@@ -24,6 +24,7 @@ apt install -y git emacs-nox
 # Initial firewall rules:
 apt install ufw
 yes | ufw enable
+ufw default deny
 ufw allow 22
 
 # Install Docker
