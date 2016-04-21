@@ -74,10 +74,10 @@ service_setup() {
 service_enable_now() {
     # Old versions of systemd don't have enable --now so this will have to do:
     (
-	# use +e due to systemd complaining about not having all the right service files:
+	# use +e when enabling because there's some hamless complaint about missing service files
 	set +e
 	systemctl enable $1
-	systemctl start $1
     )
+    systemctl start $1
 }
  
