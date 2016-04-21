@@ -108,6 +108,42 @@ If you're restoring data to a new machine, make sure you run the
 restore command before you setup your other containers as some of the
 scripts will try to look for existing data before doing their setup.
 
+### kanboard
+
+[Kanboard](http://kanboard.net/) is a self-hosted kanban task board.
+
+This uses the nginx container to use as a proxy. Setup this container
+and create the nginx config before configuring the nginx container.
+
+Setup:
+
+    ~/debian-docker-server/docker/kanboard/setup.sh
+	systemctl enable kanboard
+	systemctl start kanboard
+	
+Create a nginx config file at `~/debian-docker-server/docker_volumes/nginx/conf/kanboard.conf`:
+
+    # Kanboard
+    server {
+        listen 80;
+        server_name kanboard.your_domain.example.com;
+    
+        access_log  /var/log/nginx/log/kanboard.$domain.access.log  main;
+        error_log   /var/log/nginx/log/kanboard.$domain.error.log   error;
+    
+        location / {
+          proxy_pass         http://kanboard;
+          proxy_redirect     off;
+          proxy_set_header   Host \$host;
+          proxy_set_header   X-Real-IP \$remote_addr;
+          proxy_set_header   X-Forwarded-For \$proxy_add_x_forwarded_for;
+          proxy_set_header   X-Forwarded-Host \$server_name;
+         }
+    }
+
+This setup is designed to be run from a subdomain, so make sure you
+use something like `kanboard.yourdomain.com`.
+
 #### Create IAM and S3 bucket
 
 For duplicity backups, it's best to create a fresh bucket and access
