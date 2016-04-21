@@ -7,7 +7,7 @@
 DOCKER_CONTAINER="jimeh/znc$VERSION"
 CONTAINER_NAME="znc"
 DATA_CONTAINER_NAME="znc-data"
-[ -z "$ZNC_PORT" ] && KANBOARD_PORT="127.0.0.1:6667"
+[ -z "$ZNC_PORT" ] && ZNC_PORT="127.0.0.1:6667"
 [ -z "$EXTRA_DOCKER_OPTS" ] && EXTRA_DOCKER_OPTS="-p $ZNC_PORT:6667"
 ######################################################################
 THIS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
