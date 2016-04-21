@@ -1,3 +1,6 @@
+# Logger helper
+exe() { echo "\$ $@" ; "$@" ; }
+
 # Prompt the user to set a variable name and confirm it's correct
 ask_confirm() {
     # Args: PROMPT VARIABLE
@@ -69,9 +72,12 @@ service_setup() {
 }
 
 service_enable_now() {
-    # Old versions of systemd don't have enable --now so this will
-    # have to do:
-    systemctl enable $1
-    systemctl start $1
+    # Old versions of systemd don't have enable --now so this will have to do:
+    (
+	# use +e due to systemd complaining about not having all the right service files:
+	set +e
+	systemctl enable $1
+	systemctl start $1
+    )
 }
  
