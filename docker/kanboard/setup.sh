@@ -6,7 +6,7 @@
 DOCKER_CONTAINER="kanboard/kanboard:stable"
 CONTAINER_NAME="kanboard"
 DATA_CONTAINER_NAME="kanboard-data"
-[ -z "$KANBOARD_PORT" ] && KANBOARD_PORT="8000"
+[ -z "$KANBOARD_PORT" ] && KANBOARD_PORT="localhost:8000"
 [ -z "$EXTRA_DOCKER_OPTS" ] && EXTRA_DOCKER_OPTS="-p $KANBOARD_PORT:80"
 ######################################################################
 THIS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
