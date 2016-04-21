@@ -10,6 +10,15 @@ process to completely recreate the environment on a fresh server.
 Additionally, this README also details how to automate provisioning from your 
 personal computer with [curlbomb](https://github.com/EnigmaCurry/curlbomb).
 
+- [Bootstrap Server](#bootstrap-server)
+- [Docker containers](#docker-containers)
+  - [nginx](#nginx)
+  - [gitolite](#gitolite)
+  - [duplicity](#duplicity)
+  - [kanboard](#kanboard)
+    - [Create IAM and S3 bucket](#create-iam-and-s3-bucket)
+- [Automated setup](#automated-setup)
+
 Bootstrap Server
 ----------------
 
