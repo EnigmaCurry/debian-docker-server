@@ -5,6 +5,7 @@
 ###
 ###  - ufw firewall
 ###   - port 22 allowed, not much else
+###  - fail2ban
 ###  - Emacs editor
 ###  - Docker
 ###  - Clone of debian-docker-server into the current directory
@@ -27,6 +28,9 @@ exe apt install ufw
 yes | ufw enable
 exe ufw default deny
 exe ufw allow 22
+
+# Install fail2ban:
+sudo apt-get install -y fail2ban
 
 # Install Docker
 exe apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
