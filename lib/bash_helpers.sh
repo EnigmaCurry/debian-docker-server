@@ -108,3 +108,23 @@ service_enable_now() {
     exe wait_for_container $1
 }
  
+create_user() {
+    # Create user account $1
+    # Optionally specify SSH key as $2 and install in authorized_keys
+    if (! getent passwd $1 > /dev/null); then
+	exe useradd $1
+    fi
+    if [ ! -d "/home/$1" ]; then
+	exe mkdir -p /home/$1
+	exe chown -R $1:$1 /home/$1
+    fi
+    if [ -n "$2" ]; then
+	if (! grep "$2" /home/$1/.ssh/authorized_keys > /dev/null); then
+	    exe mkdir -p /home/$1/.ssh
+	    exe chmod 700 /home/$1/.ssh
+	    echo "$2" >> /home/$1/.ssh/authorized_keys
+	    exe chmod 600 /home/$1/.ssh/authorized_keys
+	    exe chown -R $1:$1 /home/$1/.ssh
+	fi
+    fi
+}
