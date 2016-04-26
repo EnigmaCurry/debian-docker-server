@@ -33,7 +33,6 @@ fi
 if [ ! -d "$DATA_VOLUME" ]
 then
     mkdir -p $DATA_VOLUME
-    chown 700 $DATA_VOLUME
 fi
   
 docker rm -f $DATA_CONTAINER_NAME > /dev/null 2>&1
@@ -42,7 +41,12 @@ docker pull $DOCKER_CONTAINER
 
 # Copy default config files if none exist yet:
 if [ $(ls $CONF_VOLUME | wc -l) == 0 ]; then
-    docker run -v $CONF_VOLUME:/t -it abevoelker/postgres cp -R "/etc/postgresql/9.4/main/." /t
+    docker run -v $CONF_VOLUME:/t -it $DOCKER_CONTAINER cp -R "/etc/postgresql/9.4/main/." /t
+fi
+# Copy default db if none exists yet:
+if [ $(ls $DATA_VOLUME | wc -l) == 0 ]; then
+    docker run -v $DATA_VOLUME:/t -it $DOCKER_CONTAINER cp -R "/var/lib/postgresql/9.4/main/." /t
+    chmod 700 $DATA_VOLUME
 fi
 
 create_service
