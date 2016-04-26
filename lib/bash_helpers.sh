@@ -104,7 +104,7 @@ service_enable_now() {
 	# tries to call a non-existent LSB script
 	true
     )
-    exe systemctl start $1
+    exe systemctl restart $1
     exe wait_for_container $1
 }
  
