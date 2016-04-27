@@ -113,6 +113,10 @@ create_user() {
     # Optionally specify SSH key as $2 and install in authorized_keys
     if (! getent passwd $1 > /dev/null); then
 	exe useradd $1
+	random_pw=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1)
+	chpasswd <<EOF
+$1:$random_pw
+EOF
     fi
     if [ ! -d "/home/$1" ]; then
 	exe mkdir -p /home/$1
