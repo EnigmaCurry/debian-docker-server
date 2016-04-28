@@ -117,6 +117,7 @@ create_user() {
 	chpasswd <<EOF
 $1:$random_pw
 EOF
+	exe chsh $1 -s /bin/bash
     fi
     if [ ! -d "/home/$1" ]; then
 	exe mkdir -p /home/$1
