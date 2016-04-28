@@ -13,6 +13,7 @@ DATA_CONTAINER_NAME="nginx-data"
 THIS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 source $THIS_DIR/../../lib/bash_helpers.sh
 CONTENT_VOLUME=$THIS_DIR/../../docker_volumes/$CONTAINER_NAME/html
+SITES_VOLUME=$THIS_DIR/../../docker_volumes/$CONTAINER_NAME/sites
 CONF_VOLUME=$THIS_DIR/../../docker_volumes/$CONTAINER_NAME/conf
 LOG_VOLUME=$THIS_DIR/../../docker_volumes/$CONTAINER_NAME/logs
 
@@ -50,7 +51,7 @@ EOF
 fi
     
 docker rm -f $DATA_CONTAINER_NAME > /dev/null 2>&1
-docker run -v $CONTENT_VOLUME:/usr/share/nginx/html:ro -v $CONF_VOLUME:/etc/nginx/conf.d:ro -v $LOG_VOLUME:/var/log/nginx/log --name $DATA_CONTAINER_NAME busybox true
+docker run -v $CONTENT_VOLUME:/usr/share/nginx/html:ro -v $CONF_VOLUME:/etc/nginx/conf.d:ro -v $LOG_VOLUME:/var/log/nginx/log -v $SITES_VOLUME:/usr/share/nginx/sites:ro --name $DATA_CONTAINER_NAME busybox true
 docker pull $DOCKER_CONTAINER
 
 create_service
